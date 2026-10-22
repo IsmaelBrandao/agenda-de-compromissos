@@ -3,7 +3,7 @@
  * da interface às regras. Como é um módulo ES, nada daqui vai para o
  * escopo global do navegador.
  */
-import { hoje, chaveDeHoje, deslocarMes, lerChave, nomeDoDiaDaSemana, formatarDataExtensa } from './datas.js';
+import { hoje, chaveDeHoje, deslocarMes, lerChave } from './datas.js';
 import { carregarCompromissos, salvarCompromissos } from './armazenamento.js';
 import {
   validarCompromisso,
@@ -13,6 +13,7 @@ import {
   agruparPorDia,
 } from './compromissos.js';
 import { renderizarCalendario } from './ui/calendario.js';
+import { renderizarPainelDia } from './ui/painelDia.js';
 import { criarFormulario } from './ui/formulario.js';
 import { criarAviso } from './ui/aviso.js';
 
@@ -28,7 +29,10 @@ const elementos = {
     titulo: document.querySelector('#titulo-mes'),
     grade: document.querySelector('#grade-dias'),
   },
-  tituloDia: document.querySelector('#titulo-dia'),
+  painel: {
+    titulo: document.querySelector('#titulo-dia'),
+    lista: document.querySelector('#lista-dia'),
+  },
   botaoAnterior: document.querySelector('#mes-anterior'),
   botaoSeguinte: document.querySelector('#mes-seguinte'),
   botaoHoje: document.querySelector('#mes-hoje'),
@@ -38,13 +42,17 @@ const elementos = {
 const avisar = criarAviso(document.querySelector('#aviso'));
 
 function renderizar() {
+  const compromissosPorDia = agruparPorDia(estado.compromissos);
   renderizarCalendario(elementos.calendario, {
     ano: estado.ano,
     mes: estado.mes,
     chaveSelecionada: estado.chaveSelecionada,
-    compromissosPorDia: agruparPorDia(estado.compromissos),
+    compromissosPorDia,
   });
-  elementos.tituloDia.textContent = `${nomeDoDiaDaSemana(estado.chaveSelecionada)}, ${formatarDataExtensa(estado.chaveSelecionada)}`;
+  renderizarPainelDia(elementos.painel, {
+    chave: estado.chaveSelecionada,
+    compromissos: compromissosPorDia.get(estado.chaveSelecionada) ?? [],
+  });
 }
 
 function navegar(passo) {
@@ -100,6 +108,11 @@ function registrarEventos() {
   elementos.calendario.grade.addEventListener('click', (evento) => {
     const celula = evento.target.closest('.celula');
     if (celula) selecionarDia(celula.dataset.chave);
+  });
+
+  elementos.painel.lista.addEventListener('click', (evento) => {
+    const botao = evento.target.closest('[data-acao]');
+    if (botao?.dataset.acao === 'novo') formulario.abrirNovo(estado.chaveSelecionada);
   });
 }
 
