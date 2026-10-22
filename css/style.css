@@ -279,3 +279,237 @@ textarea {
   padding: 0;
   list-style: none;
 }
+
+/* ==========================================================
+   Cores das categorias
+   Cada elemento com data-categoria ganha a variável --cor-categoria
+   ========================================================== */
+[data-categoria="trabalho"] { --cor-categoria: var(--cat-trabalho); }
+[data-categoria="estudo"] { --cor-categoria: var(--cat-estudo); }
+[data-categoria="pessoal"] { --cor-categoria: var(--cat-pessoal); }
+[data-categoria="saude"] { --cor-categoria: var(--cat-saude); }
+
+/* ==========================================================
+   Marcadores de compromissos dentro das células
+   ========================================================== */
+.celula__marcadores {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  width: 100%;
+  min-width: 0;
+}
+
+.marcador {
+  overflow: hidden;
+  padding: 0.05rem 0.4rem;
+  border-left: 3px solid var(--cor-categoria);
+  border-radius: 0 var(--raio-pequeno) var(--raio-pequeno) 0;
+  background: color-mix(in srgb, var(--cor-categoria) 12%, transparent);
+  font-size: 0.78rem;
+  line-height: 1.35;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.celula__mais {
+  padding-left: 0.4rem;
+  color: var(--tinta-suave);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+/* ==========================================================
+   Janela modal (dialog)
+   ========================================================== */
+.modal {
+  width: min(32rem, calc(100% - 2rem));
+  max-height: calc(100% - 2rem);
+  padding: 0;
+  border: 0;
+  border-radius: var(--raio);
+  background: var(--superficie);
+  color: var(--tinta);
+  box-shadow: 0 24px 60px -20px rgb(10 20 35 / 0.45);
+}
+
+.modal::backdrop {
+  background: rgb(15 22 32 / 0.5);
+}
+
+.modal[open] {
+  animation: modal-abre 160ms ease-out;
+}
+
+@keyframes modal-abre {
+  from { opacity: 0; transform: translateY(8px) scale(0.98); }
+}
+
+.modal__cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.modal__titulo {
+  font-family: var(--fonte-titulo);
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.modal__acoes {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  padding-top: 0.5rem;
+}
+
+.botao--discreto {
+  border-color: transparent;
+  background: transparent;
+}
+
+/* ==========================================================
+   Formulário
+   ========================================================== */
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  padding: 1.5rem;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.campo--grupo {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.campo > label,
+.campo--grupo > legend {
+  padding: 0;
+  font-weight: 700;
+}
+
+.campo__opcional {
+  color: var(--tinta-suave);
+  font-weight: 400;
+}
+
+.campo__horarios {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.campo__horarios .campo > label {
+  font-weight: 400;
+  color: var(--tinta-suave);
+}
+
+.campo input,
+.campo textarea {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--linha);
+  border-radius: var(--raio-pequeno);
+  background: var(--fundo);
+}
+
+.campo textarea {
+  resize: vertical;
+}
+
+.campo input:focus-visible,
+.campo textarea:focus-visible {
+  outline-offset: 0;
+}
+
+.campo [aria-invalid="true"] {
+  border-color: var(--erro);
+  box-shadow: 0 0 0 1px var(--erro);
+}
+
+.campo__erro {
+  color: var(--erro);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+/* Categorias como botões de opção com a cor de cada uma */
+.categorias {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding-top: 0.35rem;
+}
+
+.categoria {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.4rem 0.85rem 0.4rem 0.6rem;
+  border: 1px solid var(--linha);
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 400;
+}
+
+.categoria input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.categoria__cor {
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 50%;
+  background: var(--cor-categoria);
+}
+
+.categoria:has(input:checked) {
+  border-color: var(--cor-categoria);
+  background: color-mix(in srgb, var(--cor-categoria) 14%, transparent);
+  font-weight: 700;
+}
+
+.categoria:has(input:focus-visible) {
+  outline: 3px solid var(--cat-trabalho);
+  outline-offset: 2px;
+}
+
+/* ==========================================================
+   Aviso de confirmação
+   ========================================================== */
+.aviso {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  z-index: 10;
+  margin: 0;
+  padding: 0.7rem 1.2rem;
+  border-radius: 999px;
+  background: var(--tinta);
+  color: var(--fundo);
+  font-weight: 700;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 1rem);
+  transition: opacity 200ms, transform 200ms;
+}
+
+.aviso--visivel {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}

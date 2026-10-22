@@ -40,5 +40,60 @@
       <ul class="dia__lista" id="lista-dia"></ul>
     </section>
   </main>
+
+  <p class="aviso" id="aviso" role="status" aria-live="polite"></p>
+
+  <dialog class="modal" id="modal-compromisso" aria-labelledby="titulo-formulario">
+    <form class="formulario" id="formulario-compromisso" novalidate>
+      <div class="modal__cabecalho">
+        <h2 class="modal__titulo" id="titulo-formulario">Novo compromisso</h2>
+        <button type="button" class="botao botao--icone botao--discreto" data-fechar aria-label="Fechar">×</button>
+      </div>
+
+      <div class="campo">
+        <label for="campo-titulo">Título</label>
+        <input id="campo-titulo" name="titulo" type="text" maxlength="80" autocomplete="off" required aria-describedby="erro-titulo">
+        <p class="campo__erro" id="erro-titulo" hidden></p>
+      </div>
+
+      <div class="campo">
+        <label for="campo-data">Data</label>
+        <input id="campo-data" name="data" type="date" required aria-describedby="erro-data">
+        <p class="campo__erro" id="erro-data" hidden></p>
+      </div>
+
+      <fieldset class="campo campo--grupo">
+        <legend>Horário <span class="campo__opcional">(opcional)</span></legend>
+        <div class="campo__horarios">
+          <div class="campo">
+            <label for="campo-inicio">Início</label>
+            <input id="campo-inicio" name="inicio" type="time" aria-describedby="erro-inicio">
+          </div>
+          <div class="campo">
+            <label for="campo-fim">Término</label>
+            <input id="campo-fim" name="fim" type="time" aria-describedby="erro-fim">
+          </div>
+        </div>
+        <p class="campo__erro" id="erro-inicio" hidden></p>
+        <p class="campo__erro" id="erro-fim" hidden></p>
+      </fieldset>
+
+      <fieldset class="campo campo--grupo">
+        <legend>Categoria</legend>
+        <div class="categorias" id="opcoes-categoria"></div>
+        <p class="campo__erro" id="erro-categoria" hidden></p>
+      </fieldset>
+
+      <div class="campo">
+        <label for="campo-descricao">Descrição <span class="campo__opcional">(opcional)</span></label>
+        <textarea id="campo-descricao" name="descricao" rows="3" maxlength="400"></textarea>
+      </div>
+
+      <div class="modal__acoes">
+        <button type="button" class="botao" data-fechar>Cancelar</button>
+        <button type="submit" class="botao botao--principal" id="botao-salvar">Salvar compromisso</button>
+      </div>
+    </form>
+  </dialog>
 </body>
 </html>
