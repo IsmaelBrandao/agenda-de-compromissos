@@ -19,6 +19,7 @@ import { renderizarPainelDia } from './ui/painelDia.js';
 import { criarFormulario } from './ui/formulario.js';
 import { criarAviso } from './ui/aviso.js';
 import { criarConfirmacao } from './ui/confirmacao.js';
+import { iniciarTema } from './ui/tema.js';
 
 const estado = {
   ano: 0,
@@ -140,6 +141,7 @@ function registrarEventos() {
   });
 }
 
+iniciarTema(document.querySelector('#botao-tema'));
 estado.compromissos = carregarCompromissos();
 registrarEventos();
 irParaHoje();

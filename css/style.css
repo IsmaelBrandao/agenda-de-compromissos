@@ -2,20 +2,21 @@
    Tokens de cor, tipografia e espaçamento
    ========================================================== */
 :root {
-  --fundo: #f3f5f8;
-  --superficie: #ffffff;
-  --superficie-fora: #eaeef3;
-  --tinta: #18212d;
-  --tinta-suave: #5a6676;
-  --linha: #dce2ea;
+  /* light-dark(claro, escuro): o navegador escolhe pelo color-scheme ativo */
+  --fundo: light-dark(#f3f5f8, #111821);
+  --superficie: light-dark(#ffffff, #18212c);
+  --superficie-fora: light-dark(#eaeef3, #141c26);
+  --tinta: light-dark(#18212d, #e6ebf1);
+  --tinta-suave: light-dark(#5a6676, #98a5b5);
+  --linha: light-dark(#dce2ea, #273342);
   --marca-texto: #ffe45c;
   --sobre-marca-texto: #18212d;
-  --erro: #c2253f;
+  --erro: light-dark(#c2253f, #ff6b81);
 
-  --cat-trabalho: #2563eb;
-  --cat-estudo: #7c3aed;
-  --cat-pessoal: #0e9f6e;
-  --cat-saude: #e0245e;
+  --cat-trabalho: light-dark(#2563eb, #6b96ff);
+  --cat-estudo: light-dark(#7c3aed, #a98bfa);
+  --cat-pessoal: light-dark(#0e9f6e, #34d399);
+  --cat-saude: light-dark(#e0245e, #fb7189);
 
   --fonte-texto: "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
   --fonte-titulo: "Bricolage Grotesque", "Atkinson Hyperlegible", system-ui, sans-serif;
@@ -24,7 +25,16 @@
   --raio: 12px;
   --espaco: clamp(1rem, 2.5vw, 2rem);
 
+  /* Sem escolha da pessoa, segue o tema do sistema operacional */
+  color-scheme: light dark;
+}
+
+:root[data-tema="claro"] {
   color-scheme: light;
+}
+
+:root[data-tema="escuro"] {
+  color-scheme: dark;
 }
 
 *,
@@ -114,6 +124,23 @@ textarea {
   gap: 1rem;
   padding: 1rem var(--espaco);
   border-bottom: 1px solid var(--linha);
+}
+
+.topo__acoes {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.icone {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+/* Mostra a lua no tema claro e o sol no escuro: o ícone indica para onde o botão leva */
+:root[data-tema="escuro"] .icone--lua,
+:root:not([data-tema="escuro"]) .icone--sol {
+  display: none;
 }
 
 .topo__marca {
@@ -596,7 +623,7 @@ textarea {
 .botao--perigo-cheio {
   border-color: var(--erro);
   background: var(--erro);
-  color: #fff;
+  color: var(--superficie);
 }
 
 .botao--perigo-cheio:hover {
