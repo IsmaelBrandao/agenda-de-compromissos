@@ -1,0 +1,281 @@
+/* ==========================================================
+   Tokens de cor, tipografia e espaçamento
+   ========================================================== */
+:root {
+  --fundo: #f3f5f8;
+  --superficie: #ffffff;
+  --superficie-fora: #eaeef3;
+  --tinta: #18212d;
+  --tinta-suave: #5a6676;
+  --linha: #dce2ea;
+  --marca-texto: #ffe45c;
+  --sobre-marca-texto: #18212d;
+  --erro: #c2253f;
+
+  --cat-trabalho: #2563eb;
+  --cat-estudo: #7c3aed;
+  --cat-pessoal: #0e9f6e;
+  --cat-saude: #e0245e;
+
+  --fonte-texto: "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --fonte-titulo: "Bricolage Grotesque", "Atkinson Hyperlegible", system-ui, sans-serif;
+
+  --raio-pequeno: 6px;
+  --raio: 12px;
+  --espaco: clamp(1rem, 2.5vw, 2rem);
+
+  color-scheme: light;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--fundo);
+  color: var(--tinta);
+  font-family: var(--fonte-texto);
+  font-size: 1rem;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid var(--cat-trabalho);
+  outline-offset: 2px;
+}
+
+/* ==========================================================
+   Botões
+   ========================================================== */
+.botao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-height: 2.5rem;
+  padding: 0.45rem 1rem;
+  border: 1px solid var(--linha);
+  border-radius: 999px;
+  background: var(--superficie);
+  cursor: pointer;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.botao:hover {
+  border-color: var(--tinta-suave);
+}
+
+.botao--principal {
+  border-color: var(--tinta);
+  background: var(--tinta);
+  color: var(--fundo);
+}
+
+.botao--principal:hover {
+  border-color: var(--tinta);
+  opacity: 0.9;
+}
+
+.botao--icone {
+  width: 2.5rem;
+  padding: 0;
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+/* ==========================================================
+   Topo
+   ========================================================== */
+.topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem var(--espaco);
+  border-bottom: 1px solid var(--linha);
+}
+
+.topo__marca {
+  font-family: var(--fonte-titulo);
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+/* ==========================================================
+   Layout principal: calendário + painel do dia
+   ========================================================== */
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 22rem;
+  gap: var(--espaco);
+  align-items: start;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: var(--espaco);
+}
+
+/* ==========================================================
+   Calendário
+   ========================================================== */
+.calendario__cabecalho {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+/* O nome do mês é o elemento de destaque da página */
+.calendario__titulo {
+  font-family: var(--fonte-titulo);
+  font-size: clamp(2.6rem, 4vw + 1.2rem, 4.75rem);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+  text-transform: lowercase;
+}
+
+.calendario__ano {
+  font-weight: 500;
+  color: var(--tinta-suave);
+}
+
+.calendario__navegacao {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.calendario__semana,
+.calendario__grade {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.calendario__semana {
+  margin: 0 0 0.5rem;
+  padding: 0;
+  list-style: none;
+  color: var(--tinta-suave);
+  font-size: 0.9rem;
+}
+
+.calendario__semana li {
+  padding-left: 0.6rem;
+}
+
+.calendario__grade {
+  gap: 1px;
+  overflow: hidden;
+  border: 1px solid var(--linha);
+  border-radius: var(--raio);
+  background: var(--linha);
+}
+
+.celula {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.35rem;
+  min-height: 7rem;
+  padding: 0.5rem;
+  border: 0;
+  background: var(--superficie);
+  text-align: left;
+  cursor: pointer;
+}
+
+.celula:hover {
+  background: var(--fundo);
+}
+
+.celula--fora {
+  background: var(--superficie-fora);
+  color: var(--tinta-suave);
+}
+
+.celula--fora .celula__numero {
+  opacity: 0.6;
+}
+
+.celula--selecionada {
+  box-shadow: inset 0 0 0 2px var(--tinta);
+}
+
+.celula__numero {
+  position: relative;
+  padding: 0 0.3rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Hoje recebe um traço de marca-texto, como numa agenda de papel */
+.celula--hoje .celula__numero {
+  color: var(--sobre-marca-texto);
+}
+
+.celula--hoje .celula__numero::before {
+  content: "";
+  position: absolute;
+  inset: 0.1em -0.15em 0.05em;
+  z-index: -1;
+  border-radius: 0.35em 0.15em 0.4em 0.2em;
+  background: var(--marca-texto);
+  transform: rotate(-3deg);
+}
+
+.celula__numero {
+  isolation: isolate;
+}
+
+/* ==========================================================
+   Painel do dia
+   ========================================================== */
+.dia {
+  position: sticky;
+  top: var(--espaco);
+  padding: 1.25rem;
+  border: 1px solid var(--linha);
+  border-radius: var(--raio);
+  background: var(--superficie);
+}
+
+.dia__titulo {
+  margin-bottom: 1rem;
+  font-family: var(--fonte-titulo);
+  font-size: 1.4rem;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.dia__lista {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}

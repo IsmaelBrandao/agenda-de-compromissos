@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Agenda de compromissos com calendário mensal, feita com HTML, CSS e JavaScript puro.">
+  <title>Agenda de Compromissos</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topo">
+    <h1 class="topo__marca">Agenda</h1>
+    <button type="button" class="botao botao--principal" id="botao-novo">Novo compromisso</button>
+  </header>
+
+  <main class="layout">
+    <section class="calendario" aria-labelledby="titulo-mes">
+      <div class="calendario__cabecalho">
+        <h2 class="calendario__titulo" id="titulo-mes" aria-live="polite"></h2>
+        <nav class="calendario__navegacao" aria-label="Navegação entre meses">
+          <button type="button" class="botao botao--icone" id="mes-anterior" aria-label="Mês anterior">‹</button>
+          <button type="button" class="botao" id="mes-hoje">Hoje</button>
+          <button type="button" class="botao botao--icone" id="mes-seguinte" aria-label="Próximo mês">›</button>
+        </nav>
+      </div>
+
+      <ol class="calendario__semana" aria-hidden="true">
+        <li>dom</li><li>seg</li><li>ter</li><li>qua</li><li>qui</li><li>sex</li><li>sáb</li>
+      </ol>
+      <div class="calendario__grade" id="grade-dias"></div>
+    </section>
+
+    <section class="dia" aria-labelledby="titulo-dia">
+      <h2 class="dia__titulo" id="titulo-dia"></h2>
+      <ul class="dia__lista" id="lista-dia"></ul>
+    </section>
+  </main>
+</body>
+</html>
