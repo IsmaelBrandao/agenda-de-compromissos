@@ -607,3 +607,88 @@ textarea {
 .dia__titulo:focus {
   outline: none;
 }
+
+/* ==========================================================
+   Responsivo
+   ========================================================== */
+
+/* Tablet e notebook pequeno: o painel do dia desce para baixo do calendário */
+@media (max-width: 960px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .dia {
+    position: static;
+  }
+}
+
+/* Celular: células menores e compromissos viram bolinhas coloridas */
+@media (max-width: 600px) {
+  .topo {
+    padding-block: 0.75rem;
+  }
+
+  .calendario__cabecalho {
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .calendario__semana li {
+    padding-left: 0;
+    text-align: center;
+  }
+
+  .celula {
+    align-items: center;
+    gap: 0.3rem;
+    min-height: 3.75rem;
+    padding: 0.4rem 0.15rem;
+  }
+
+  .celula__marcadores {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 3px;
+  }
+
+  .marcador {
+    width: 0.45rem;
+    height: 0.45rem;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: var(--cor-categoria);
+    font-size: 0;
+  }
+
+  .celula__mais {
+    padding: 0;
+    font-size: 0.7rem;
+    line-height: 1;
+  }
+
+  .formulario {
+    padding: 1.25rem;
+  }
+
+  .modal__acoes {
+    flex-direction: column-reverse;
+  }
+
+  .modal__acoes .botao {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modal[open] {
+    animation: none;
+  }
+
+  .aviso {
+    transition: none;
+  }
+}
