@@ -10,12 +10,15 @@ import {
   temErros,
   adicionarCompromisso,
   atualizarCompromisso,
+  removerCompromisso,
+  buscarCompromisso,
   agruparPorDia,
 } from './compromissos.js';
 import { renderizarCalendario } from './ui/calendario.js';
 import { renderizarPainelDia } from './ui/painelDia.js';
 import { criarFormulario } from './ui/formulario.js';
 import { criarAviso } from './ui/aviso.js';
+import { criarConfirmacao } from './ui/confirmacao.js';
 
 const estado = {
   ano: 0,
@@ -40,6 +43,7 @@ const elementos = {
 };
 
 const avisar = criarAviso(document.querySelector('#aviso'));
+const confirmar = criarConfirmacao(document.querySelector('#modal-confirmacao'));
 
 function renderizar() {
   const compromissosPorDia = agruparPorDia(estado.compromissos);
@@ -94,6 +98,17 @@ function salvarDoFormulario(dados, idEmEdicao) {
   return {};
 }
 
+async function excluir(id) {
+  const compromisso = buscarCompromisso(estado.compromissos, id);
+  const confirmou = await confirmar(`"${compromisso.titulo}" será apagado da agenda e não dá para desfazer.`);
+  if (!confirmou) return;
+
+  aplicarAlteracao(removerCompromisso(estado.compromissos, id), 'Compromisso excluído.');
+  renderizar();
+  // O botão clicado sumiu junto com o item, então o foco volta para o título do dia
+  elementos.painel.titulo.focus();
+}
+
 const formulario = criarFormulario(document.querySelector('#modal-compromisso'), {
   aoEnviar: salvarDoFormulario,
 });
@@ -110,9 +125,18 @@ function registrarEventos() {
     if (celula) selecionarDia(celula.dataset.chave);
   });
 
+  // Mesma ideia no painel: os botões dizem a ação e o item diz qual compromisso
   elementos.painel.lista.addEventListener('click', (evento) => {
     const botao = evento.target.closest('[data-acao]');
-    if (botao?.dataset.acao === 'novo') formulario.abrirNovo(estado.chaveSelecionada);
+    if (!botao) return;
+
+    const id = botao.closest('[data-id]')?.dataset.id;
+    const acoes = {
+      novo: () => formulario.abrirNovo(estado.chaveSelecionada),
+      editar: () => formulario.abrirEdicao(buscarCompromisso(estado.compromissos, id)),
+      excluir: () => excluir(id),
+    };
+    acoes[botao.dataset.acao]();
   });
 }
 

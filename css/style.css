@@ -585,3 +585,25 @@ textarea {
   gap: 0.75rem;
   color: var(--tinta-suave);
 }
+
+/* ==========================================================
+   Confirmação de exclusão
+   ========================================================== */
+.modal--estreito {
+  width: min(26rem, calc(100% - 2rem));
+}
+
+.botao--perigo-cheio {
+  border-color: var(--erro);
+  background: var(--erro);
+  color: #fff;
+}
+
+.botao--perigo-cheio:hover {
+  border-color: var(--erro);
+  opacity: 0.9;
+}
+
+.dia__titulo:focus {
+  outline: none;
+}

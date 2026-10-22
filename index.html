@@ -36,7 +36,7 @@
     </section>
 
     <section class="dia" aria-labelledby="titulo-dia">
-      <h2 class="dia__titulo" id="titulo-dia"></h2>
+      <h2 class="dia__titulo" id="titulo-dia" tabindex="-1"></h2>
       <ul class="dia__lista" id="lista-dia"></ul>
     </section>
   </main>
@@ -92,6 +92,17 @@
       <div class="modal__acoes">
         <button type="button" class="botao" data-fechar>Cancelar</button>
         <button type="submit" class="botao botao--principal" id="botao-salvar">Salvar compromisso</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog class="modal modal--estreito" id="modal-confirmacao" aria-labelledby="titulo-confirmacao" aria-describedby="texto-confirmacao">
+    <form class="formulario" method="dialog">
+      <h2 class="modal__titulo" id="titulo-confirmacao">Excluir compromisso?</h2>
+      <p id="texto-confirmacao" data-texto></p>
+      <div class="modal__acoes">
+        <button class="botao" value="cancelar" autofocus>Cancelar</button>
+        <button class="botao botao--perigo-cheio" value="confirmar">Excluir</button>
       </div>
     </form>
   </dialog>
